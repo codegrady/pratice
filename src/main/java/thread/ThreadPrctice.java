@@ -27,7 +27,7 @@ public class ThreadPrctice {
     }
 }
 /**
- * 集成Thread start()会调用run()
+ * 继承Thread start()会调用run()
  */
 class ThreadTest extends Thread{
     ThreadTest(String name){
