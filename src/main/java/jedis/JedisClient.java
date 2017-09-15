@@ -51,6 +51,7 @@ public class JedisClient {
         JedisPool jedisPool = new JedisPool("192.168.43.128", 6379);
         //从连接池中获得连接
         Jedis jedis = jedisPool.getResource();
+
         //使用Jedis操作数据库（方法级别使用）
         String result = jedis.get("user");
         System.out.println(result);
