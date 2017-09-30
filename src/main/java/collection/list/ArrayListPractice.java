@@ -10,7 +10,7 @@ public class ArrayListPractice {
     static ArrayList<String> list = new ArrayList<>();
     public static void main(String[] args) {
         getList();
-        sortList();
+        listLambda();
     }
 
     static void listFor(){
@@ -19,6 +19,7 @@ public class ArrayListPractice {
     }
     static void listLambda(){
         list.forEach(item-> System.out.println("v = " + item));
+        list.forEach(System.out::println);
     }
     /**
      * list 排序

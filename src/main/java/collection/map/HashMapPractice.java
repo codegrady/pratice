@@ -48,6 +48,8 @@ public class HashMapPractice {
             if("A".equals(k))
                 System.out.println("=========");
         });
+
+        map.forEach((key,value)-> System.out.println(key + " " + value));
     }
 
 
