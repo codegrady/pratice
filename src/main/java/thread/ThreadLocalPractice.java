@@ -13,15 +13,15 @@ package thread;
  protected Object initialValue()返回该线程局部变量的初始值，该方法是一个protected的方法，显然是为了让子类覆盖而设计的。这个方法是一个延迟调用方法，在线程第1次调用get()或set(Object)时才执行，并且仅执行1次。ThreadLocal中的缺省实现直接返回一个null。
  */
 public class ThreadLocalPractice {
-    public  static ThreadLocal<Integer> tl = new ThreadLocal<Integer>(){
-        public Integer initialValue(){
-            return 0;
-        }
-    };
+    public  static ThreadLocal<Integer> tl = ThreadLocal.withInitial(() -> 0);
     public  int getNextValue(){
         tl.set(tl.get()+1);
         return tl.get();
     }
+
+    public static ThreadLocal<String> objectThreadLocal = new ThreadLocal<>();
+
+
 
     public static void main(String[] args) {
         ThreadLocalPractice tlp = new ThreadLocalPractice();

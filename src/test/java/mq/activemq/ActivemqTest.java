@@ -1,8 +1,6 @@
 package mq.activemq;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.camel.component.ActiveMQComponent;
-import org.apache.activemq.command.ActiveMQTextMessage;
 import org.junit.Test;
 
 import javax.jms.*;
@@ -49,7 +47,7 @@ public class ActivemqTest {
     @Test
     public void consumer() throws Exception {
         //创建一个连接工厂对象
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.43.128:61616");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://10.1.1.186:61616");
         //使用连接工厂对象创建一个连接
         Connection connection = connectionFactory.createConnection();
         //开启连接
@@ -58,7 +56,7 @@ public class ActivemqTest {
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         //使用Session创建一个Destination，Destination应该和消息的发送端一致。
         Destination queue = session.createQueue("test-queue");
-        Destination topic = session.createTopic("test-topic");
+        Destination topic = session.createTopic("test_topic");
         //使用Session创建一个Consumer对象
         MessageConsumer consumer = session.createConsumer(topic);
         consumer.setMessageListener(new MessageListener() {

@@ -4,6 +4,8 @@ import java.nio.channels.Channel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Selector（选择器）是Java NIO中能够检测一到多个NIO通道，并能够知晓通道是否为诸如读写事件做好准备的组件。
@@ -19,7 +21,11 @@ public class SelectorPratice {
 
     }
 
-    static void startAndRegister()throws Exception{
+    /**
+     * selector 说明
+     * @throws Exception
+     */
+    static void describ()throws Exception{
         SocketChannel clientChannel = SocketChannel.open();
 
         /**
@@ -89,6 +95,40 @@ public class SelectorPratice {
         */
         selector.select();//阻塞到至少有一个通道在你注册的事件上就绪了。
         selector.select(1000);//和select()一样，除了最长会阻塞timeout毫秒(参数)。
-        selector.selectNow();//不会阻塞，不管什么通道就绪都立刻返回（译者注：此方法执行非阻塞的选择操作。如果自从前一次选择操作后，没有通道变成可选择的，则此方法直接返回零。）。
+        selector.selectNow();//不会阻塞，不管什么通道就绪都立刻返回（译者注：此方法执行非阻塞的选择操作。如果自从前一次选择操作后，没有通道变成可选择的，则此方法直接返回零。）
+
+        /**
+         * selectedKeys()
+         * 一旦调用了select()方法，并且返回值表明有一个或更多个通道就绪了，
+         * 然后可以通过调用selector的selectedKeys()方法，访问“已选择键集（selected key set）”中的就绪通道。
+         */
+        Set<SelectionKey> selectedKeys = selector.selectedKeys();
+        Iterator keyIterator = selectedKeys.iterator();
+        while (keyIterator.hasNext()){
+            SelectionKey skey = (SelectionKey) keyIterator.next();
+            if(key.isAcceptable()) {
+                // a connection was accepted by a ServerSocketChannel.
+            } else if (skey.isConnectable()) {
+                // a connection was established with a remote server.
+            } else if (skey.isReadable()) {
+                // a channel is ready for reading
+            } else if (skey.isWritable()) {
+                // a channel is ready for writing
+            }
+            keyIterator.remove();
+        }
+
+        /**
+         * 某个线程调用select()方法后阻塞了，即使没有通道已经就绪，也有办法让其从select()方法返回。
+         * 只要让其它线程在第一个线程调用select()方法的那个对象上调用Selector.wakeup()方法即可。
+         * 阻塞在select()方法上的线程会立马返回。
+         * 如果有其它线程调用了wakeup()方法，但当前没有线程阻塞在select()方法上，下个调用select()方法的线程会立即“醒来（wake up）”。
+         */
+        selector.wakeup();
+
+        /**
+         * 用完Selector后调用其close()方法会关闭该Selector，且使注册到该Selector上的所有SelectionKey实例无效。通道本身并不会关闭。
+         */
+        selector.close();
     }
 }

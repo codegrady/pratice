@@ -17,12 +17,15 @@ import java.util.Map;
  */
 public class SolrPratice {
     public static void main(String[] args) throws Exception{
-        queryIndexByKey("中国");
+//        queryIndexByKey("中国");
+        importIndex();
     }
 
 
+
     static void importIndex()throws Exception{
-        String url = "http://10.1.1.186:8080/solr/testCore";
+//        String url = "http://10.1.1.186:8080/solr/testCore";
+        String url = "http://10.1.1.186:8983/solr/testCore";
         SolrClient solrClient = new HttpSolrClient(url);
 //        SolrInputDocument document = new SolrInputDocument();
 //        document.addField("id","test");
@@ -45,7 +48,7 @@ public class SolrPratice {
     }
 
     static void updateIndex()throws Exception{
-        String url = "http://10.1.1.186:8080/solr/testCore";
+        String url = "http://10.1.1.186:8983/testCore";
         SolrClient solrClient = new HttpSolrClient(url);
         solrClient.deleteById("");
         solrClient.deleteByQuery("");
@@ -53,7 +56,7 @@ public class SolrPratice {
     }
 
     static void queryIndexByKey(String key)throws Exception{
-        String url = "http://10.1.1.186:8080/solr/testCore";
+        String url = "http://10.1.1.186:8983/testCore";
         SolrClient solrClient = new HttpSolrClient(url);
 //        SolrParams params = SolrParams
 //        solrClient.query("ddd");
