@@ -16,7 +16,8 @@ public class StringContains {
 
     static boolean isLetter(char s){
         String reg = "0123456789";
-        reg.charAt();
-        return reg.contains(new String(s));
+//        reg.charAt();
+//        return reg.contains(new String(s));
+        return true;
     }
 }
