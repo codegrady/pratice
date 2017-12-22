@@ -43,7 +43,7 @@ public class ExecutorPractice {
      * 定长线程池，可控制线程最大并发数，超出的线程会在队列中等待
       * @throws Exception
      */
-    static void newFixdeThreadPoolTest()throws Exception{
+    static void newFixedThreadPoolTest()throws Exception{
         int taskNum = 3;
         ExecutorService fixedThreadPool = Executors.newFixedThreadPool(taskNum);
         for(int i = 0; i < 10; i++){
@@ -87,7 +87,7 @@ public class ExecutorPractice {
      * 延时1秒，每3秒执行一次
      * @throws Exception
      */
-    static void newCheduleThreadPool()throws Exception{
+    static void newScheduleThreadPool()throws Exception{
         int poolSize = 5;
         ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(poolSize);
         scheduledThreadPool.scheduleAtFixedRate(new Runnable() {
@@ -148,6 +148,9 @@ public class ExecutorPractice {
     }
 
 
+    /**
+     * 泛型 - 是线程返回值的类型
+     */
     static class MyCallable implements Callable<Object> {
         private String taskNum;
 

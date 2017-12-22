@@ -7,14 +7,14 @@ import java.util.Collections;
  * Created by Grady on 2017/8/3.
  */
 public class ArrayListPractice {
-    static ArrayList<String> list = new ArrayList<>();
+    static ArrayList<Integer> list = new ArrayList<>();
     public static void main(String[] args) {
         getList();
-        listLambda();
+        remove();
     }
 
     static void listFor(){
-        for (String v:list)
+        for (Integer v:list)
             System.out.println("v = " + v);
     }
     static void listLambda(){
@@ -31,14 +31,20 @@ public class ArrayListPractice {
         });
     }
 
+    static void remove(){
+
+        list.subList(2,4).clear();
+        System.out.println(list.toString());
+    }
+
     static ArrayList getList(){
-        list.add("a");
-        list.add("b");
-        list.add("d");
-        list.add("c");
-        list.add("1");
-        list.add("f");
-        list.add("A");
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(7);
         return list;
     }
 }
