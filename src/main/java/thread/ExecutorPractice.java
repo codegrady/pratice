@@ -48,15 +48,12 @@ public class ExecutorPractice {
         ExecutorService fixedThreadPool = Executors.newFixedThreadPool(taskNum);
         for(int i = 0; i < 10; i++){
             final int index = i;
-            fixedThreadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("thread -- "+index);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            fixedThreadPool.execute(() -> {
+                System.out.println("thread -- "+index);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             });
         }
@@ -90,12 +87,7 @@ public class ExecutorPractice {
     static void newCheduleThreadPool()throws Exception{
         int poolSize = 5;
         ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(poolSize);
-        scheduledThreadPool.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("hahahahah");
-            }
-        },1,3,TimeUnit.SECONDS);
+        scheduledThreadPool.scheduleAtFixedRate(() -> System.out.println("hahahahah"),1,3,TimeUnit.SECONDS);
     }
 
     /**
