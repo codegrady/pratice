@@ -24,7 +24,8 @@ public class JedisClient {
      */
     static void jedisTest(){
         //创建一个jedis对象，需要指定服务的ip和端口号
-        Jedis jedis = new Jedis("192.168.43.128", 6379);
+        String host = "localhost";//192.168.43.128
+        Jedis jedis = new Jedis(host, 6379);
         //直接操作数据库
         jedis.set("user","GongYu");
         String result = jedis.get("redis");

@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 public class BigDecimalPractice {
     public static void main(String[] args) {
         BigDecimal a = BigDecimal.ONE;
-        add(a);
-        System.out.println("a = " + a);
+        BigDecimal b = a.divide(BigDecimal.valueOf(100000000));
+        System.out.println(b);
+        BigDecimal c = b.stripTrailingZeros();
+        System.out.println(c);
     }
 
     private static void add(BigDecimal bigDecimal){
