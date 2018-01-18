@@ -9,7 +9,7 @@ import java.util.Date;
  * @Description:
  * @Todo: Created by Grady on 2017/10/24.
  */
-public class User implements Serializable{
+public class Users implements Serializable{
 
     private String id;
     private String name;
@@ -17,10 +17,14 @@ public class User implements Serializable{
     @JSONField(format =  "yyyy-MM-DD HH:MM")
     private Date date;
 
-    public User() {
-    }
+    public static void main(String[] args) {
+        Users users = new Users("hhh","ddd","dddasa",new Date());
+        System.out.println(users.toString());
 
-    public User(String id, String name, String password,Date date) {
+    }
+    public Users(){}
+
+    public Users(String id, String name, String password, Date date) {
         this.id = id;
         this.name = name;
         this.password = password;

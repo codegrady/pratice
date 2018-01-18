@@ -1,6 +1,6 @@
 package mq.kafka;
 
-import entity.User;
+import entity.Users;
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
@@ -121,13 +121,13 @@ public class Producer {
 
     public static void main(String[] args) throws Exception {
         //发送一个信息
-        send("test-topic",new User("id","userName", "password",new Date()));
+        send("test-topic",new Users("id","userName", "password",new Date()));
         //为test启动一个消费者，启动后每次有消息则打印对象信息
-        Producer.startConsumer("test", new MqMessageHandler<User>() {
+        Producer.startConsumer("test", new MqMessageHandler<Users>() {
             @Override
-            public void handle(User user) {
+            public void handle(Users users) {
                 //实现自己的处理逻辑，这里只打印出消息
-                System.out.println(user.toString());
+                System.out.println(users.toString());
             }
         },2);
     }
