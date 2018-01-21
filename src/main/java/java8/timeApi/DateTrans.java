@@ -15,7 +15,7 @@ public class DateTrans {
 
     // Converts this Date object to an Instant.
     public Instant toInstant() {
-        return Instant.ofEpochMilli(new Date().getTime());
+        return Instant.ofEpochMilli(System.currentTimeMillis());
     }
 
 
