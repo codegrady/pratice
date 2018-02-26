@@ -1,14 +1,18 @@
 package quartz.quartz;
 
-import quartz.job.HelloJob;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import quartz.job.SimpleJob;
+import quartz.job.StateJob;
 
 import java.util.Date;
 
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
+
 public class QuartzTest {
     private static SchedulerFactory schedulerFactory = new StdSchedulerFactory();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         try {
             Scheduler scheduler = schedulerFactory.getScheduler();
@@ -17,23 +21,37 @@ public class QuartzTest {
             //任务
             JobKey jobKey = new JobKey("Job1","HelloJob");
             //任务完成后不会被删除 - storeDurably
-            JobDetail jobDetail = JobBuilder.newJob(HelloJob.class).withIdentity(jobKey).storeDurably().build();
-            JobDataMap jobDataMap = new JobDataMap();
-//            jobDataMap.p
-            //触发时间点
-            SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(5).repeatForever();
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity("t1","helloT").startNow().withSchedule(simpleScheduleBuilder).build();
+            JobDetail jobDetail = newJob(SimpleJob.class).withIdentity(jobKey).storeDurably().build();
 
+            jobDetail.getJobDataMap().putAsString("num",23242);
+            jobDetail.getJobDataMap().put("name","jobdatamaptest");
+            //触发时间点
+            Date startTime = DateBuilder.nextGivenSecondDate(null,5);//5秒之后
+            SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).withRepeatCount(3);
+            Trigger trigger = newTrigger().withIdentity("t1","helloT").startAt(startTime).withSchedule(simpleScheduleBuilder).build();
 
             Date date = scheduler.scheduleJob(jobDetail,trigger);
-            System.out.println(date);
-            //删除
-            scheduler.deleteJob(jobKey);
-            System.out.println("stopping......");
-            //停止一个在进行的任务
-            scheduler.interrupt("Job1");
-            scheduler.interrupt(jobKey);
-            System.out.println("stopped......");
+            jobDetail.getJobDataMap().put("name_322","test");
+            System.out.println("date = "+date);
+
+            JobKey statekey = new JobKey("state_1","state");
+            JobDetail stateDetail = newJob(StateJob.class).withIdentity(statekey).build();
+            SimpleScheduleBuilder stateScheduel = SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).withRepeatCount(3);
+            trigger = newTrigger().withIdentity("st_1","state").startAt(startTime).withSchedule(stateScheduel).build();
+
+            stateDetail.getJobDataMap().put("state","hahah");
+            stateDetail.getJobDataMap().put("name","statefulJob");
+            scheduler.scheduleJob(stateDetail,trigger);
+
+            stateDetail.getJobDataMap().put("name_state","11111122222");
+
+//            //删除
+//            scheduler.deleteJob(jobKey);
+//            System.out.println("stopping......");
+//            //停止一个在进行的任务
+//            scheduler.interrupt("Job1");
+//            scheduler.interrupt(jobKey);
+//            System.out.println("stopped......");
 //            try{
 //                long time = 20;
 //                System.out.println("ending....");
@@ -43,6 +61,7 @@ public class QuartzTest {
 //                e.printStackTrace();
 //            }
 
+            Thread.sleep(2*60*1000);
             scheduler.shutdown();
         } catch (SchedulerException e) {
             e.printStackTrace();
