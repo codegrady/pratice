@@ -1,2 +1,2 @@
 # Data Type Transfer 
-int,long,short,double,float,string,char,byte
+int,long,short,double,float,basic.string,char,byte

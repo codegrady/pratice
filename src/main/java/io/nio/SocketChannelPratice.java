@@ -29,7 +29,7 @@ public class SocketChannelPratice {
         int byteread = socketChannel.read(buffer);
 
         //write data to socketchannel
-        String newdata = "new string to socket ..."+System.currentTimeMillis();
+        String newdata = "new basic.string to socket ..."+System.currentTimeMillis();
         ByteBuffer buf = ByteBuffer.allocate(48);
         buf.clear();
         buf.put(newdata.getBytes());

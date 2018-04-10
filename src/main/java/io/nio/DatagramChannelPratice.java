@@ -26,7 +26,7 @@ public class DatagramChannelPratice {
         datagramChannel.receive(buffer);
 
         //send data
-        String sendStr = "The string send by DatagramChannel ..."+System.currentTimeMillis();
+        String sendStr = "The basic.string send by DatagramChannel ..."+System.currentTimeMillis();
         ByteBuffer sendbuffer = ByteBuffer.allocate(1024);
         sendbuffer.clear();
         sendbuffer.put(sendStr.getBytes());
