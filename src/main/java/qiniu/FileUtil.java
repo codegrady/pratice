@@ -4,12 +4,15 @@ import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
+import com.qiniu.util.StringMap;
+import com.qiniu.util.UrlSafeBase64;
 
 
 public class FileUtil {
-    private static final String ACCESS_KEY = "9yAU7Ie07vT-OVHNpjV_doddMmO16jrwq7eTgl4o";
-    private static final String SECRET_KEY = "E1pnvw2TD1lpF10R0P_olshFThgCmnLUa567sp76";
-    private static final String BUCKET ="uwork";
+    private static final String ACCESS_KEY = "olkdxPeGLNbXwDr5yfeVaHidWcxcu3GNlMHtm-Ky";
+    private static final String SECRET_KEY = "jnDHRJ2tFPBLVv0YSXEbB7fLyX4UwnzH6kvVlIuA";
+    private static final String BUCKET ="bugliu";
+    private static final String Pipeline = "liubo_test";
     private static final Auth AUTH = Auth.create(ACCESS_KEY, SECRET_KEY);
 
     private static final UploadManager uploadManager = new UploadManager();
@@ -21,7 +24,7 @@ public class FileUtil {
         return AUTH.uploadToken(BUCKET);
     }
     public static void main(String[] args) {
-        upload();
+        uploadMedia();
     }
 
     static void upload(){
@@ -45,5 +48,37 @@ public class FileUtil {
                 //ignore
             }
         }
+    }
+
+
+    static void uploadMedia(){
+        String media = "I:\\Desktop\\test.mp4";
+        String key = "test.mp4";
+        try {
+            //调用put方法上传
+            Response res = uploadManager.put(media, key, getUploadToken());
+            //打印返回的信息 http://img.urwork.cn/FhHai3nwJSr6AKMfXLCZsP-VdH4H
+            System.out.println(res.bodyString());
+
+            if(!res.isOK()) {
+                return;
+            }
+            StringMap putPolicy = new StringMap();
+
+            //指令
+            String saveMp4Entry = String.format("%s:"+key, BUCKET);
+            String vframeJpgFop = String.format("vframe/jpg/offset/1/w/50/h100/%s", UrlSafeBase64.encodeToString(saveMp4Entry));
+            putPolicy.put("persistentOps", vframeJpgFop);
+//数据处理队列名称，必填
+            putPolicy.put("persistentPipeline", Pipeline);
+//数据处理完成结果通知地址
+            putPolicy.put("persistentNotifyUrl", "http://api.example.com/qiniu/pfop/notify");
+            long expireSeconds = 3600;
+            String upToken = AUTH.uploadToken(BUCKET, key, expireSeconds, putPolicy);
+            System.out.println(upToken);
+        }catch (QiniuException e){
+            System.out.println(e.response);
+        }
+
     }
 }
