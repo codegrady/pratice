@@ -26,7 +26,11 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.5.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[7.0.0, 7.0.99]</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>

@@ -7,6 +7,9 @@ package basic.object;
  */
 public class ObjectTest {
     public static void main(String[] args) {
-        Object o = new Object();
+        Object o = 12;
+        System.out.println(o);
+        System.out.println(o.toString());
+        System.out.println(String.valueOf(o));
     }
 }
