@@ -52,7 +52,7 @@ public class FileUtil {
 
 
     static void uploadMedia(){
-        String media = "I:\\Desktop\\test.mp4";
+        String media = "D:\\test.mp4";
         String key = "test.mp4";
         try {
             //调用put方法上传
