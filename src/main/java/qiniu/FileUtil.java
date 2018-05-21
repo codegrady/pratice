@@ -4,8 +4,10 @@ import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.processing.OperationManager;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import com.qiniu.util.UrlSafeBase64;
@@ -27,7 +29,7 @@ public class FileUtil {
         return AUTH.uploadToken(BUCKET);
     }
     public static void main(String[] args) {
-        transferType();
+        getFileInfo();
     }
 
     static void upload(){
@@ -124,5 +126,23 @@ public class FileUtil {
             }
         }
 
+    }
+
+    static void  getFileInfo(){
+        String key="lhN9zeUqVroeWSUt5-N9_rhGZLO6";
+        Zone z = Zone.zone0();
+        Configuration c = new Configuration(z);
+        BucketManager bucketManager = new BucketManager(AUTH, c);
+        try {
+            FileInfo fileInfo = bucketManager.stat(BUCKET, key);
+            System.out.println(fileInfo.endUser);
+            System.out.println(fileInfo.key);
+            System.out.println(fileInfo.hash);
+            System.out.println(fileInfo.fsize);
+            System.out.println(fileInfo.mimeType);
+            System.out.println(fileInfo.putTime);
+        } catch (QiniuException ex) {
+            System.err.println(ex.response.toString());
+        }
     }
 }
