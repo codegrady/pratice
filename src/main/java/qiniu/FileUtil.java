@@ -4,6 +4,7 @@ import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.processing.OperationManager;
+import com.qiniu.processing.OperationStatus;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
@@ -29,7 +30,7 @@ public class FileUtil {
         return AUTH.uploadToken(BUCKET);
     }
     public static void main(String[] args) {
-        getFileInfo();
+        transferType();
     }
 
     static void upload(){
@@ -91,28 +92,35 @@ public class FileUtil {
      * 媒体转码
      */
     static void transferType(){
-        String key = "test1234.mp4";
+        String key = "test1234.MOV";
         StringMap putPolicy = new StringMap();
         //avthumb/mp4/ab/128k/ar/44100/acodec/libfaac/r/30/vb/600k/vcodec/libx264/s/480x360/autoscale/1/stripmeta/0|saveas/YnVnbGl1OnRlc3QxMjM0Lm1wNA==
         //指令
         Zone z = Zone.zone0();
         Configuration c = new Configuration(z);
 
-        //新建一个OperationManager对象
+        //新建一个OperationManager对象   61.49.250.90:8083/companyVideo/videoTransferStatus
         OperationManager operater = new OperationManager(AUTH, c);
         //设置要转码的空间和key，并且这个key在你空间中存在
         //设置转码操作参数
         String fops = "avthumb/mp4/ab/128k/ar/44100/acodec/libfaac/r/30/vb/600k/vcodec/libx264/s/480x360/autoscale/0/stripmeta/0";
         String saveMp4Entry = String.format("%s:test12345.mp4", BUCKET);
+        String persistentNotifyUrl = "http://61.49.250.90:8083/companyVideo/videoTransferStatus";
+
         //可以对转码后的文件进行使用saveas参数自定义命名，当然也可以不指定文件会默认命名并保存在当前空间。
         String urlbase64 = UrlSafeBase64.encodeToString(saveMp4Entry);
         String pfops = fops + "|saveas/" + urlbase64;
         //设置pipeline参数
-        StringMap params = new StringMap().putWhen("force", 1, true).putNotEmpty("pipeline", Pipeline);
+        StringMap params = new StringMap().putWhen("force", 1, true).putNotEmpty("persistentPipeline", Pipeline).putNotEmpty("persistentNotifyUrl",persistentNotifyUrl).put("callbackBody", "{\"id\":12}");
         try {
-            String persistid = operater.pfop(BUCKET, key, pfops, params);
+//            String persistid = operater.pfop(BUCKET, key, pfops,params);
+            String persistid = operater.pfop(BUCKET, key, pfops,Pipeline ,persistentNotifyUrl,true);
             //打印返回的persistid
             System.out.println(persistid);
+
+            Thread.sleep(5000);
+            OperationStatus operationStatus = operater.prefop(persistid);
+            System.out.println(operationStatus.code+"  "+operationStatus.desc);
         } catch (QiniuException e) {
             //捕获异常信息
             Response r = e.response;
@@ -124,6 +132,8 @@ public class FileUtil {
             } catch (QiniuException e1) {
                 //ignore
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
     }
