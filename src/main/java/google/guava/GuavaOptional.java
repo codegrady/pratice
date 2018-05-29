@@ -1,4 +1,4 @@
-package guava;
+package google.guava;
 
 import com.google.common.base.Optional;
 
