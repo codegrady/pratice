@@ -9,8 +9,8 @@ import com.aliyun.oss.model.*;
 import java.io.*;
 
 public class AliyunUtil {
-    private static final String ACCESSKEY = "LTAIkXjZ00PNOJN2";
-    private static final String SECRET = "R3QvY42nvVkaVpdnIDvWoiqhQ0n9nO";
+    private static final String ACCESSKEY = "LTAI55555kXjZ00PNOJN2333";
+    private static final String SECRET = "R3QvY42nvVk55555aVpdnIDvWoiqhQ0n9nO4444";
     private static final String ENDPOINT = "oss-cn-qingdao.aliyuncs.com";
 
     public static void main(String[] args) throws IOException {
