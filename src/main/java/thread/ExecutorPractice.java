@@ -17,7 +17,7 @@ import java.util.concurrent.*;
  */
 public class ExecutorPractice {
     public static void main(String[] args) throws Exception{
-        newSingleThreadExecutorTest();
+        newFixedThreadPoolTest();
     }
 
 
@@ -57,6 +57,7 @@ public class ExecutorPractice {
                 }
             });
         }
+        fixedThreadPool.shutdown();
 
     }
 
@@ -80,7 +81,7 @@ public class ExecutorPractice {
         scheduledThreadPool.shutdown();
     }
 
-    /**
+    /*
      * 延时1秒，每3秒执行一次
      * @throws Exception
      */

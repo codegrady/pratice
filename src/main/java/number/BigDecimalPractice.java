@@ -15,6 +15,17 @@ public class BigDecimalPractice {
         BigDecimal b = a.divide(BigDecimal.valueOf(5), MathContext.DECIMAL64);
         b.setScale(8,BigDecimal.ROUND_HALF_UP);
         System.out.println("b = " + b);
+        System.out.println(new BigDecimal("0.39"));
+        float f = 0.3f;
+        double d = 0.4;
+        int i = 3;
+        long l = 4L;
+
+        System.out.println(new BigDecimal(f));
+        System.out.println(new BigDecimal(d));
+        System.out.println(new BigDecimal(i));
+        System.out.println(new BigDecimal(l));
+
     }
 
     private static void add(BigDecimal bigDecimal){

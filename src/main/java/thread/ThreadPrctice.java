@@ -6,14 +6,18 @@ package thread;
  * Created by Grady on 2017/8/3.
  */
 public class ThreadPrctice {
+
+
+    static volatile int x = 0;
+
     public static void main(String[] args) {
-        Thread t1 = new ThreadTest("t1");
-        Thread t2 = new ThreadTest("t2");
-        t1.start();
-        t2.start();
-        RunnableTest r1 = new RunnableTest();
-        Thread t3 = new Thread(r1,"RunnableTest");
-        t3.start();
+//        Thread t1 = new ThreadTest("t1");
+//        Thread t2 = new ThreadTest("t2");
+//        t1.start();
+//        t2.start();
+//        RunnableTest r1 = new RunnableTest();
+//        Thread t3 = new Thread(r1,"RunnableTest");
+//        t3.start();
 
 
         try{
@@ -21,6 +25,16 @@ public class ThreadPrctice {
                 System.out.println("Main Thread:"+i);
                 Thread.sleep(100);
             }
+
+            for (int i = 0; i < 10; i++) {
+                ((Runnable) () -> {
+                    for (int j = 0; j < 10; j++) {
+                        x++;
+                    }
+                }).run();
+            }
+            System.out.println("x = " + x);
+
         }catch (InterruptedException e){
             System.out.println("Main exception");
         }
@@ -35,6 +49,7 @@ class ThreadTest extends Thread{
         System.out.println("Child thread: "+this);
 //        start();
     }
+    @Override
     public void run(){
         try {
             for (int i = 6; i > 0; i--) {
@@ -60,6 +75,7 @@ class RunnableTest implements Runnable{
 //        t.start();
 //    }
 
+    @Override
     public void run() {
         try {
             for (int i = 6; i > 0; i--) {

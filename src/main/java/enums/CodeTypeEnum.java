@@ -1,7 +1,7 @@
 package enums;
 
 import lombok.*;
-
+@NoArgsConstructor
 @AllArgsConstructor
 //@ToString
 public enum CodeTypeEnum {

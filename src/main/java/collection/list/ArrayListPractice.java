@@ -1,5 +1,6 @@
 package collection.list;
 
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,58 @@ public class ArrayListPractice {
     static ArrayList<Integer> list = new ArrayList<>();
     static List<Entity> eList = new ArrayList<>();
     public static void main(String[] args) {
-        sortEntity();
+        List<String> arrayList1 = new ArrayList<String>();
+        arrayList1.add("1");
+        arrayList1.add("2");
+        for (String s : arrayList1) {
+            if("1".equals(s)){
+                arrayList1.remove(s);
+            }
+        }
+//        List<String> arrayList2 = new ArrayList<String>();
+//        arrayList2.add("2");
+//        arrayList2.add("1");
+//        for (String s : arrayList2) {
+//            if("1".equals(s)){
+//                arrayList2.remove(s);
+//            }
+//        }
+
+//        getList();
+//        list.forEach(i->i = new Integer(i+1));
+//        System.out.println(list);
+//        list.forEach(i->{
+//            if(i<4){
+//                return;
+//            }
+//            System.out.println("i = " + i);
+//        });
+//        list = (ArrayList<Integer>) list.stream().map(i-> i.equals(2)?i+1:i).collect(Collectors.toList());
+//        System.out.println(list);
+//        while (CollectionUtils.isNotEmpty(list)){
+//            List sub = list.subList(0,1);
+//            System.out.println(sub);
+//            sub.clear();
+//            System.out.println(list);
+//        }
+
+//        Calendar calendar = Calendar.getInstance();
+//       int week = calendar.get(Calendar.DAY_OF_WEEK);
+//        System.out.println("week = " + week);
+//       List t  =   Stream.of("one", "two", "three", "four")
+//                .filter(p -> p.length() > 3)
+//                .peek(v -> System.out.println("Filtered Value:" + v))
+//                .map(String::toUpperCase)
+//                .peek(v -> System.out.println("Value:" + v))
+//                .collect(Collectors.toList());
+//
+//        System.out.println("Arrays.toString(list.toArray()) = " + Arrays.toString(t.toArray()));
+//        getList();
+//        List a =  list.stream().filter(l-> l==2||l==5).peek(l->{
+//
+//        }).collect(Collectors.toList());
+//        System.out.println("Arrays.toString(list.toArray()) = " + Arrays.toString(a.toArray()));
+
     }
 
     static void listFor(){
@@ -60,11 +112,11 @@ public class ArrayListPractice {
 
 
     static void getList(){
-        list.add(1);
+        list.add(1232333);
         list.add(2);
-        list.add(6);
-        list.add(9);
-        list.add(3);
+        list.add(2);
+        list.add(9444);
+        list.add(34555);
         list.add(4);
         list.add(5);
         list.add(7);
